@@ -1,12 +1,14 @@
 'use strict'
 import './styles.css';
 // import '@pnotify/core/dist/BrightTheme.css';
+const shit = 'shhittts'
 import fetchCountries from './js/fetchCountries'
 
 // const pnotify = require('@pnotify/core/dist/PNotify');
 
   
-const debounce = require('lodash.debounce');
+// const debounce = require('lodash.debounce');
+import debounce from 'lodash.debounce';
 
 const refs = {
     serachInput: document.querySelector('input[data-input="text"]'),
@@ -26,5 +28,6 @@ function handleSearch(e){
         return
     }
     fetchCountries(searchInput);
+    
 }
 

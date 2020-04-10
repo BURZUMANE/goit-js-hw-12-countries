@@ -1,15 +1,17 @@
 import countryLi from '../templates/countries.hbs'
 import '@pnotify/core/dist/BrightTheme.css';
 const pnotify = require('@pnotify/core/dist/PNotify');
-
 export default function fetchCountries(searchQuery) {
     const baseUrl = 'https://restcountries.eu/rest/v2/name/';
     const list = document.querySelector('.country-list');
     const name = searchQuery;
     fetch(baseUrl + name)
         .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error fetching data");
+            if (!response.ok){
+                throw new Error("Error fetching data");
+            }else{
+                return response.json();
+            };
         }).then(data => {
             if(data.length > 10){
                 pnotify.error({
@@ -17,12 +19,12 @@ export default function fetchCountries(searchQuery) {
                   });
                 
             }else if(data.length === 2){
-                console.log(data.forEach(element => {
+                data.forEach(element => {
                     if(element.name.toLowerCase() === name.toLowerCase()){
                         // console.log(element.name,'+' ,name);
                         list.innerHTML = countryLi(element);
                     }
-                }));
+                });
                 // const newData = [...data];
 
                 // newData.forEach(elem => console.log(elem.name.toLowerCase() === name));
