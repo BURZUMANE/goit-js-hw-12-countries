@@ -8,14 +8,26 @@ export default function fetchCountries(searchQuery) {
     fetch(baseUrl + name)
         .then(response => {
             if (!response.ok){
-                throw new Error("Error fetching data");
+                pnotify.error({
+                    text: '😱Something terrible happened. A fetch error '
+                  });
+                // throw new Error("Error fetching data");
             }else{
+                
                 return response.json();
             };
         }).then(data => {
             if(data.length > 10){
                 pnotify.error({
-                    title: 'Too many matches found, be more specific!',
+                    text: 'Too many matches like that, try to be more specific 🎯',
+                    animateSpeed: 'fast',
+                    modules: {
+                        Animate: {
+                          animate: false,
+                          inClass: 'bounceInLeft',
+                          outClass: 'bounceOutRight'
+                        }
+                      }
                   });
                 
             }else if(data.length === 2){
