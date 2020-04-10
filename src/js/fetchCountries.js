@@ -16,6 +16,21 @@ export default function fetchCountries(searchQuery) {
                     title: 'Too many matches found, be more specific!',
                   });
                 
+            }else if(data.length === 2){
+                console.log(data.forEach(element => {
+                    if(element.name.toLowerCase() === name.toLowerCase()){
+                        // console.log(element.name,'+' ,name);
+                        list.innerHTML = countryLi(element);
+                    }
+                }));
+                // const newData = [...data];
+
+                // newData.forEach(elem => console.log(elem.name.toLowerCase() === name));
+                // const filtered = newData.filter(elem =>{
+                //     elem.name.toLowerCase() === name.toLowerCase();
+                // });
+                // console.log(filtered);
+
             }else if(data.length === 1) {
                 const country = data[0];
                 const li = countryLi(country)
