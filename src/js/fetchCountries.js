@@ -1,6 +1,10 @@
 import countryLi from '../templates/countries.hbs'
-import '@pnotify/core/dist/BrightTheme.css';
-const pnotify = require('@pnotify/core/dist/PNotify');
+import PNotify from '../../node_modules/pnotify/dist/es/PNotify'
+import PNotifyButtons from '../../node_modules/pnotify/dist/es/PNotifyButtons.js';
+
+
+
+ 
 const list = document.querySelector('.country-list');
 export default function fetchCountries(searchQuery) {
     const baseUrl = 'https://restcountries.eu/rest/v2/name/';
@@ -8,6 +12,7 @@ export default function fetchCountries(searchQuery) {
     const name = searchQuery;
     fetch(baseUrl + name)
         .then(response => {
+
             return checkFetch(response);
         
         }).then(data => {
@@ -18,9 +23,11 @@ export default function fetchCountries(searchQuery) {
         })
 }
 
+
+
 const checkFetch = (response)=>{
     if (!response.ok){
-        pnotify.error({
+        PNotify.error({
             text: '😱Something terrible happened. A fetch error '
           });
         // throw new Error("Error fetching data");
@@ -32,7 +39,7 @@ const checkFetch = (response)=>{
 
 const checkData = (data ,name)=> {
     if(data.length > 10){
-        pnotify.error({
+        PNotify.error({
             text: 'Too many matches like that, try to be more specific 🎯',
             animateSpeed: 'fast',
             modules: {
@@ -43,17 +50,7 @@ const checkData = (data ,name)=> {
                 }
               }
           });
-        }
-    // }
-    else if(data.length === 2){
-        console.log(name);
-        data.forEach(element => {
-            if(element.name.toLowerCase() === name.toLowerCase()){
-                console.log(element.name,'+' ,name);
-                list.innerHTML = countryLi(element);
-            }
-        });
-    }else if(data.length === 1) {
+        }else if(data.length === 1) {
         const country = data[0];
         const li = countryLi(country)
         list.innerHTML = li;

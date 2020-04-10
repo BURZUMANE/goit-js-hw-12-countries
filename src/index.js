@@ -1,5 +1,6 @@
 'use strict'
 import './styles.css';
+import '../node_modules/pnotify/dist/PNotifyBrightTheme.css';
 import fetchCountries from './js/fetchCountries'
 import debounce from 'lodash.debounce';
 
