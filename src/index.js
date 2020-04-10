@@ -16,10 +16,7 @@ refs.serachInput.addEventListener('input', debounce(handleSearch,500));
 
 function handleSearch(e){
     const searchInput = e.target.value;
-    if(searchInput.length === 0){
-        document.querySelector('.country-list').innerHTML = '';
-        return
-    }
+    document.querySelector('.country-list').innerHTML = ''
     fetchCountries(searchInput);
 
 }
