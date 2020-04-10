@@ -3,8 +3,6 @@ import PNotify from '../../node_modules/pnotify/dist/es/PNotify'
 import PNotifyButtons from '../../node_modules/pnotify/dist/es/PNotifyButtons.js';
 
 
-
- 
 const list = document.querySelector('.country-list');
 export default function fetchCountries(searchQuery) {
     const baseUrl = 'https://restcountries.eu/rest/v2/name/';
@@ -27,28 +25,39 @@ export default function fetchCountries(searchQuery) {
 
 const checkFetch = (response)=>{
     if (!response.ok){
-        PNotify.error({
-            text: '😱Something terrible happened. A fetch error '
+        const notice = PNotify.error({
+            text: '😱Something terrible happened. A fetch error ',
+            modules: {
+              Buttons: {
+                closer: false,
+                sticker: false
+              }
+            }
           });
+          notice.on('click', function() {
+            notice.close();
+          });
+         
         // throw new Error("Error fetching data");
     }else{
-        
+        PNotify.closeAll();
         return response.json();
     };
 }
 
 const checkData = (data ,name)=> {
     if(data.length > 10){
-        PNotify.error({
+        const notice = PNotify.error({
             text: 'Too many matches like that, try to be more specific 🎯',
-            animateSpeed: 'fast',
             modules: {
-                Animate: {
-                  animate: true,
-                  inClass: 'bounceInLeft',
-                  outClass: 'bounceOutRight'
-                }
+              Buttons: {
+                closer: false,
+                sticker: false
               }
+            }
+          });
+          notice.on('click', function() {
+            notice.close();
           });
         }else if(data.length === 1) {
         const country = data[0];
